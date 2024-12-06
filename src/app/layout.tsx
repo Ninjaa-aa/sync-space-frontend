@@ -1,5 +1,5 @@
 // src/app/layout.tsx
-import { AuthProvider } from './providers';
+import { AuthProvider } from '@/app/providers';
 import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
