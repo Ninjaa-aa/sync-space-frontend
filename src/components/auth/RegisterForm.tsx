@@ -32,7 +32,7 @@ export default function RegistrationFlow() {
           setError(data.message || 'Something went wrong. Please try again.');
         }
       } else {
-        router.push(/register/verify?email=${encodeURIComponent(email)});
+        router.push(`/register/verify?email=${encodeURIComponent(email)}`);
       }
     } catch {
       setError('Unable to connect to the server. Please try again later.');
