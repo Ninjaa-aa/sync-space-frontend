@@ -4,26 +4,27 @@
 export default function GithubButton() {
   const handleGithubLogin = () => {
     const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-    const githubCallbackUrl = process.env.NEXT_PUBLIC_GITHUB_CALLBACK_URL;
+    const redirectUri = `${window.location.origin}/auth/github/callback`;
     
-    if (!githubClientId || !githubCallbackUrl) {
-      console.error('GitHub configuration is missing');
+    if (!githubClientId) {
+      console.error('GitHub authentication is not configured');
       return;
     }
-
-    // Generate and store state parameter
+    
+    // Generate and store state
     const state = crypto.randomUUID();
-    sessionStorage.setItem('github_oauth_state', state);
+    window.sessionStorage.setItem('github_oauth_state', state);
 
-    // Construct GitHub OAuth URL
-    const githubAuthUrl = new URL('https://github.com/login/oauth/authorize');
-    githubAuthUrl.searchParams.append('client_id', githubClientId);
-    githubAuthUrl.searchParams.append('redirect_uri', githubCallbackUrl);
-    githubAuthUrl.searchParams.append('scope', 'read:user user:email');
-    githubAuthUrl.searchParams.append('state', state);
+    // Build GitHub OAuth URL
+    const params = new URLSearchParams({
+      client_id: githubClientId,
+      redirect_uri: redirectUri,
+      scope: 'user:email',
+      state,
+    });
 
-    // Redirect to GitHub
-    window.location.href = githubAuthUrl.toString();
+    // Redirect to GitHub's OAuth page
+    window.location.href = `https://github.com/login/oauth/authorize?${params.toString()}`;
   };
 
   return (
