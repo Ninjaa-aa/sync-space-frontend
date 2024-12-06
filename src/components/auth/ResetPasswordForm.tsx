@@ -47,10 +47,12 @@ export default function ResetPasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
         <input
+          id="email"
           type="email"
           required
+          placeholder="Enter your email"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -58,11 +60,13 @@ export default function ResetPasswordForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">OTP</label>
+        <label htmlFor="otp" className="block text-sm font-medium text-gray-700">OTP</label>
         <input
+          id="otp"
           type="text"
           required
           pattern="[0-9]{6}"
+          placeholder="Enter 6-digit code"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.otp}
           onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
@@ -70,10 +74,12 @@ export default function ResetPasswordForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">New Password</label>
+        <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">New Password</label>
         <input
+          id="newPassword"
           type="password"
           required
+          placeholder="Enter your new password"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.newPassword}
           onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
@@ -81,10 +87,12 @@ export default function ResetPasswordForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
         <input
+          id="confirmPassword"
           type="password"
           required
+          placeholder="Confirm your password"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.confirmPassword}
           onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}

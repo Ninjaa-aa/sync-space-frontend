@@ -35,10 +35,12 @@ export default function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700">First Name</label>
+        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
         <input
+          id="firstName"
           type="text"
           required
+          placeholder="Enter your first name"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.firstName}
           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
@@ -46,10 +48,12 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Last Name</label>
+        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
         <input
+          id="lastName"
           type="text"
           required
+          placeholder="Enter your last name"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.lastName}
           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
@@ -57,10 +61,12 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
         <input
+          id="email"
           type="email"
           required
+          placeholder="Enter your email"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -68,10 +74,12 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Password</label>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
         <input
+          id="password"
           type="password"
           required
+          placeholder="Enter your password"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
