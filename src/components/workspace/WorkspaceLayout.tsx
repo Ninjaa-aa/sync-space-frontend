@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import WorkspaceHeader from './WorkspaceHeader';
+
 import WorkspaceSidebar from './WorkspaceSidebar';
 
 interface WorkspaceLayoutProps {

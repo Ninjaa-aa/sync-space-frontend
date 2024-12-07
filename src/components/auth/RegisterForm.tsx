@@ -10,8 +10,8 @@ export default function RegistrationFlow() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleContinue = async () => {
-    if (!email) return;
+  const handleSubmit = async (data: { email: string }) => {
+    if (!data.email) return;
     
     setError('');
     setIsLoading(true);
@@ -32,7 +32,7 @@ export default function RegistrationFlow() {
           setError(data.message || 'Something went wrong. Please try again.');
         }
       } else {
-        router.push(/register/verify?email=${encodeURIComponent(email)});
+        router.push(`/register/verify?email=${encodeURIComponent(email)}`);
       }
     } catch {
       setError('Unable to connect to the server. Please try again later.');
@@ -43,7 +43,7 @@ export default function RegistrationFlow() {
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleContinue();
+      handleSubmit({ email });
     }
   };
 
@@ -103,7 +103,7 @@ export default function RegistrationFlow() {
           </div>
           
           <button
-            onClick={handleContinue}
+            onClick={() => handleSubmit({ email })}
             disabled={!email || isLoading}
             className="w-full py-3 px-4 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

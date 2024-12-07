@@ -92,6 +92,8 @@ export default function OtpVerification({ email }: { email: string }) {
                 ref={inputRefs[index]}
                 type="text"
                 maxLength={1}
+                aria-label={`Digit ${index + 1} of verification code`}
+                placeholder="-"
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
