@@ -1,4 +1,4 @@
-// src/app/providers.tsx
+// src/app/auth/context/AuthContext.tsx
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType>({
   isLoading: true,
 });
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,8 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
           const response = await authApi.get('/auth/me');
           setUser(response.data);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
+        } catch {
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
         }
@@ -58,6 +57,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);

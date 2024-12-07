@@ -7,10 +7,27 @@ export interface User {
   roleType: string;
 }
 
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface AuthResponse {
-  user: User;
-  tokens: {
-    accessToken: string;
-    refreshToken: string;
+  data: {
+    user: User;
+    tokens: AuthTokens;
   };
+}
+
+export interface TokenData {
+  code?: string;
+  id_token?: string;
+  [key: string]: unknown;
+}
+
+export interface OAuthProviderConfig {
+  name: string;
+  stateKey: string;
+  tokenExchange?: (code: string) => Promise<TokenData>;
+  processToken: (tokenData: TokenData) => Promise<AuthResponse>;
 }

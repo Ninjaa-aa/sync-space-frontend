@@ -1,5 +1,5 @@
 import LoginForm from '@/components/auth/LoginForm';
-import SocialLogin from '@/components/auth/SocialLogin';
+import { SocialLogin } from '@/components/auth/Register/SocialLogin';
 import Link from 'next/link';
 
 export default function LoginPage() {

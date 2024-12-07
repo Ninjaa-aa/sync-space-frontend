@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import authApi, { handleApiError } from '@/lib/auth';
+import {authApi} from '@/lib/auth';
 
 const ForgotPasswordFlow = () => {
   const router = useRouter();
@@ -205,3 +205,9 @@ const ForgotPasswordFlow = () => {
 };
 
 export default ForgotPasswordFlow;
+function handleApiError(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return 'An unexpected error occurred. Please try again.';
+}
