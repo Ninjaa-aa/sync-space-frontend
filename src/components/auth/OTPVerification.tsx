@@ -7,7 +7,14 @@ export default function OtpVerification({ email }: { email: string }) {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
+  const inputRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null)
+  ];
 
   const handleChange = (index: number, value: string) => {
     if (value.length > 1) return;
@@ -16,7 +23,6 @@ export default function OtpVerification({ email }: { email: string }) {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       inputRefs[index + 1].current?.focus();
     }
@@ -59,14 +65,17 @@ export default function OtpVerification({ email }: { email: string }) {
         body: JSON.stringify({ email, otp: otpString }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error(await response.text());
+        throw new Error(data.message || 'Verification failed');
       }
 
-      // Redirect to registration completion page
-      router.push('/register/landing');
+      // Redirect to landing page after successful verification
+      router.push(`/register/landing?email=${encodeURIComponent(email)}`);
     } catch (err) {
-      console.error(err);
+      const error = err as Error;
+      console.error('Verification error:', error.message);
       setError('Invalid or expired code. Please try again.');
     } finally {
       setIsLoading(false);

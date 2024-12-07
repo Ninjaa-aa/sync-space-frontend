@@ -46,7 +46,7 @@ export function EmailForm() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('/api/auth/register/init', {
+      const response = await fetch('/api/auth/register/init', { // Updated endpoint
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -55,19 +55,15 @@ export function EmailForm() {
       const data = await response.json();
       
       if (!response.ok) {
-        if (response.status === 400) {
-          const errorMessage = data.message as keyof typeof ERROR_MESSAGES;
-          setError(ERROR_MESSAGES[errorMessage] || data.message);
-        } else if (response.status === 429) {
-          setError('Too many attempts. Please try again in a few minutes.');
-        } else {
-          setError(ERROR_MESSAGES.default);
-        }
-      } else {
-        router.push(`/register/verify?email=${encodeURIComponent(email)}`);
+        const errorMessage = data.message as keyof typeof ERROR_MESSAGES;
+        setError(ERROR_MESSAGES[errorMessage] || data.message);
+        return;
       }
-    } catch (err) {
-      console.error('Registration error:', err);
+      
+      router.push(`/register/verify?email=${encodeURIComponent(email)}`);
+    } catch (error: unknown) {
+      const err = error as Error;
+      console.error('Registration error:', err.message);
       setError(ERROR_MESSAGES['Network error']);
     } finally {
       setIsLoading(false);
