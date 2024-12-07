@@ -11,6 +11,7 @@ export const authApi = axios.create({
   withCredentials: true
 });
 
+// Add request interceptor to add token
 authApi.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
   if (token) {
@@ -19,16 +20,28 @@ authApi.interceptors.request.use((config) => {
   return config;
 });
 
+// Add response interceptor to handle 401 errors
+authApi.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      // Clear tokens on authentication error
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const handleApiError = (error: unknown): string => {
   if (axios.isAxiosError(error)) {
-    // Handle Axios errors
     if (!error.response) {
       return 'Network error. Please check your connection.';
     }
     return error.response.data?.message || `Error: ${error.response.status}`;
   }
-  // Handle other errors
   return error instanceof Error ? error.message : 'An unexpected error occurred';
 };
 
+// Default export for convenience
 export default authApi;

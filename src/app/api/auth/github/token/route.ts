@@ -1,49 +1,34 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// src/app/api/auth/github/token/route.ts
+// src/app/api/auth/token/github/route.ts
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const code = searchParams.get('code');
-
-  if (!code) {
-    return NextResponse.json(
-      { error: 'Code is required' },
-      { status: 400 }
-    );
-  }
-
+export async function GET() {
   try {
-    // Exchange code for access token
-    const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
-        code,
-        redirect_uri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/github/callback`,
-      }),
-    });
+    const githubClientId = process.env.GITHUB_CLIENT_ID;
+    const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/auth/github/callback`;
 
-    if (!tokenResponse.ok) {
-      throw new Error('Failed to exchange code for token');
+    if (!githubClientId) {
+      return NextResponse.json(
+        { error: 'GitHub OAuth is not configured' },
+        { status: 500 }
+      );
     }
 
-    const tokenData = await tokenResponse.json();
+    // Generate state for security
+    const state = crypto.randomUUID();
 
-    if (tokenData.error) {
-      throw new Error(tokenData.error_description || 'Token exchange failed');
-    }
+    // Construct GitHub OAuth URL
+    const githubAuthUrl = new URL('https://github.com/login/oauth/authorize');
+    githubAuthUrl.searchParams.append('client_id', githubClientId);
+    githubAuthUrl.searchParams.append('redirect_uri', redirectUri);
+    githubAuthUrl.searchParams.append('scope', 'read:user user:email');
+    githubAuthUrl.searchParams.append('state', state);
 
-    return NextResponse.json(tokenData);
-  } catch (error: any) {
-    console.error('GitHub token exchange error:', error);
+    // Return redirect response
+    return NextResponse.redirect(githubAuthUrl.toString());
+  } catch (error) {
+    console.error('GitHub OAuth error:', error);
     return NextResponse.json(
-      { error: error.message || 'Token exchange failed' },
+      { error: 'Failed to initiate GitHub OAuth' },
       { status: 500 }
     );
   }

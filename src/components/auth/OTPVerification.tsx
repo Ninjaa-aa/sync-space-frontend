@@ -64,7 +64,7 @@ export default function OtpVerification({ email }: { email: string }) {
       }
 
       // Redirect to registration completion page
-      router.push('/register/complete');
+      router.push('/register/landing');
     } catch (err) {
       console.error(err);
       setError('Invalid or expired code. Please try again.');

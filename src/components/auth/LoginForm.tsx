@@ -3,7 +3,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/app/providers';
+import { useAuth } from '@/app/auth/context/AuthContext';
 import { authApi } from '@/lib/auth';
 
 export default function LoginForm() {
