@@ -1,3 +1,5 @@
+import authApi from "@/lib/auth";
+
 const handleGoogleSuccess = async (response: any) => {
   try {
     const result = await authApi.post('/auth/google', {
