@@ -4,7 +4,7 @@ import {
   CreateWorkspaceDto,
   WorkspaceResponse,
   Channel,
-  ChannelVisibility,
+  ChannelType,
 } from "@/types/workspace";
 
 class WorkspaceService {
@@ -19,7 +19,7 @@ class WorkspaceService {
         name: typeof channel === "string"
           ? (channel as string).toLowerCase().trim().replace(/\s+/g, "-")
           : channel.name.toLowerCase().trim().replace(/\s+/g, "-"),
-        visibility: ChannelVisibility.PUBLIC,
+        type: ChannelType.PUBLIC,
         description: typeof channel === "string"
           ? `Channel for ${channel}`
           : channel.description || `Channel for ${channel.name}`,
@@ -65,7 +65,7 @@ class WorkspaceService {
     try {
       const formattedChannels: Channel[] = channels.map((channel) => ({
         name: channel.toLowerCase().trim().replace(/\s+/g, "-"),
-        visibility: ChannelVisibility.PUBLIC,
+        type: ChannelType.PUBLIC,
         description: `Channel for ${channel}`,
       }));
 

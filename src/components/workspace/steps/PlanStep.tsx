@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { pricingPlans, Plan } from "@/data/plan";
 import { workspaceService } from "@/services/workspaceService";
 import type { CreateWorkspaceDto, Channel } from "@/types/workspace";
-import { ChannelVisibility } from "@/types/workspace";
+import { ChannelType } from "@/types/workspace";
 
 interface PlanStepProps {
   workspaceName: string;
@@ -35,7 +35,7 @@ export const PlanStep = ({
   const formatChannels = (channelNames: string[]): Channel[] => {
     return channelNames.map((channel) => ({
       name: channel.toLowerCase().trim().replace(/\s+/g, "-"),
-      visibility: ChannelVisibility.PUBLIC,
+      type: ChannelType.PUBLIC,
       description: `Channel for ${channel}`,
     }));
   };
