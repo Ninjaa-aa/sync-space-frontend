@@ -1,3 +1,4 @@
+'use client';
 import { Navbar } from '@/components/landingPage/Navbar'
 import { Hero } from '@/components/landingPage/Hero'
 import { LogoCloud } from '@/components/landingPage/LogoCloud'

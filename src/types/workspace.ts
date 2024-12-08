@@ -70,27 +70,10 @@ export interface StepProps {
   formData: {
     name: string; // Workspace name
     adminName: string | number | readonly string[] | undefined; // Admin name input
-    photoPreview: any; // Photo preview (file or URL)
+    photoPreview: string | File; // Photo preview (file or URL)
   };
   onChange: (field: string, value: string) => void; // Function to handle field changes
   onNext: () => void; // Callback for proceeding to the next step
   error?: string; // Optional error message
 }
 
-interface PlanStepProps {
-
-  workspaceName: string;
-
-  adminName: string;
-
-  adminPhoto?: string;
-
-  channels: string[];
-
-  pendingInvites: string[];
-
-  error: string;
-
-  onSelectPlan: (plan: Plan) => void;
-
-}

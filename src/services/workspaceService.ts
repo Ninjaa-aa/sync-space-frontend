@@ -31,9 +31,9 @@ class WorkspaceService {
         channels: formattedChannels,
         pendingInvites: data.pendingInvites?.map(email => email.trim()),
         plan: {
-          id: data.plan.id,
-          name: data.plan.name,
-          billingPeriod: data.plan.billingPeriod || 'monthly'
+          id: data.plan?.id || '',
+          name: data.plan?.name || '',
+          billingPeriod: data.plan?.billingPeriod || 'monthly'
         }
       };
 
@@ -53,11 +53,14 @@ class WorkspaceService {
       return response.data;
     } catch (error) {
       console.error('Workspace creation error:', error);
-      if (error.response?.status === 401) {
+      if (error instanceof Error && (error as { response?: { status?: number } }).response?.status === 401) {
         localStorage.removeItem('accessToken');
         throw new Error('Your session has expired. Please login again.');
       }
-      throw new Error(error.response?.data?.message || 'Failed to create workspace');
+      if (error instanceof Error && 'response' in error) {
+        throw new Error((error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Failed to create workspace');
+      }
+      throw new Error('Failed to create workspace');
     }
   }
 
@@ -72,10 +75,14 @@ class WorkspaceService {
       await authApi.post(`/workspaces/${workspaceId}/channels`, {
         channels: formattedChannels,
       });
-    } catch (error: any) {
-      console.error("Channel creation error:", error.response?.data || error);
+    } catch (error) {
+      if (error instanceof Error && 'response' in error) {
+        console.error("Channel creation error:", (error as { response?: { data?: { message?: string } } }).response?.data || error);
+      } else {
+        console.error("Channel creation error:", error);
+      }
       throw new Error(
-        error.response?.data?.message || "Failed to create channels"
+        (error as { response?: { data?: { message?: string } } }).response?.data?.message || "Failed to create channels"
       );
     }
   }
@@ -85,11 +92,16 @@ class WorkspaceService {
       await authApi.post(`/workspaces/${workspaceId}/invites`, {
         emails: emails.map((email) => email.trim()),
       });
-    } catch (error: any) {
-      console.error("Invite sending error:", error.response?.data || error);
-      throw new Error(
-        error.response?.data?.message || "Failed to send invites"
-      );
+    } catch (error: unknown) {
+      if (error instanceof Error && 'response' in error) {
+        console.error("Invite sending error:", (error as { response?: { data?: { message?: string } } }).response?.data || error);
+        throw new Error(
+          (error as { response?: { data?: { message?: string } } }).response?.data?.message || "Failed to send invites"
+        );
+      } else {
+        console.error("Invite sending error:", error);
+        throw new Error("Failed to send invites");
+      }
     }
   }
 }
