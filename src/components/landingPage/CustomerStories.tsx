@@ -4,18 +4,18 @@ export function CustomerStories() {
     const stories = [
         {
             company: 'Deliveroo',
-            logo: '/placeholder.svg',
+            logo: 'https://cdn.worldvectorlogo.com/logos/deliveroo-1.svg',
             image: '/placeholder.svg',
         },
         {
             company: 'Spotify',
-            logo: '/placeholder.svg',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg',
             image: '/placeholder.svg',
             title: 'How Spotify boosted ad sales and streamlined operations with Slack',
         },
         {
             company: 'OpenAI',
-            logo: '/placeholder.svg',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg',
             image: '/placeholder.svg',
         },
     ]

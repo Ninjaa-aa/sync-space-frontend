@@ -1,54 +1,53 @@
-import Image from 'next/image'
+"use client"
+
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { ArrowUpRight, Users, Clock, Zap } from 'lucide-react';
+
+function AnimatedMetric({ value, label, icon: Icon }: { value: string; label: string; icon: React.ElementType }) {
+    const [isVisible, setIsVisible] = useState(false);
+    const { ref, inView } = useInView({ triggerOnce: true });
+
+    useEffect(() => {
+        if (inView) {
+            setIsVisible(true);
+        }
+    }, [inView]);
+
+    return (
+        <div ref={ref} className="relative group">
+            <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}>
+                <div className="flex items-center gap-4 mb-2">
+                    <div className="w-12 h-12 rounded-full bg-[#3F0B3F]/10 flex items-center justify-center">
+                        {Icon && <Icon className="w-6 h-6 text-[#3F0B3F]" />}
+                    </div>
+                    <ArrowUpRight className="w-5 h-5 text-green-500" />
+                </div>
+                <div className="text-3xl font-bold text-[#3F0B3F] mb-1">{value}</div>
+                <div className="text-gray-600">{label}</div>
+            </div>
+        </div>
+    );
+}
 
 export function Metrics() {
+    const metrics = [
+        { value: "85%", label: "Team Engagement", icon: Users },
+        { value: "2.5x", label: "Faster Response Time", icon: Clock },
+        { value: "60%", label: "Productivity Boost", icon: Zap }
+    ];
+
     return (
-        <section className="py-24">
+        <section className="py-24 bg-white">
             <div className="container mx-auto px-4">
-                <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-                    Millions of people love to work in ChatSphere.
-                </h2>
-                <div className="grid lg:grid-cols-2 gap-16">
-                    <div className="space-y-8">
-                        <div className="space-y-2">
-                            <div className="text-5xl font-bold">700M</div>
-                            <p className="text-lg text-muted-foreground">messages sent daily</p>
-                        </div>
-                        <div className="space-y-2">
-                            <div className="text-5xl font-bold">4M</div>
-                            <p className="text-lg text-muted-foreground">
-                                ChatSphere Connect users working directly with external teams each week
-                            </p>
-                        </div>
-                        <div className="space-y-2">
-                            <div className="text-5xl font-bold">3M</div>
-                            <p className="text-lg text-muted-foreground">daily workflows</p>
-                        </div>
-                        <div className="space-y-2">
-                            <div className="text-5xl font-bold">1.7M</div>
-                            <p className="text-lg text-muted-foreground">apps actively used each week</p>
-                        </div>
-                    </div>
-                    <div className="space-y-6">
-                        <h3 className="text-2xl font-bold">Don&apos;t just take our word for it.</h3>
-                        <p className="text-lg text-muted-foreground">
-                            ChatSphere is a leader in over 150 G2 market reports.
-                        </p>
-                        <div className="grid grid-cols-3 gap-4">
-                            {[...Array(6)].map((_, i) => (
-                                <div key={i} className="relative w-24 h-24">
-                                    <Image
-                                        src="/placeholder.svg"
-                                        alt={`G2 Badge ${i + 1}`}
-                                        fill
-                                        className="object-contain"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {metrics.map((metric, index) => (
+                        <AnimatedMetric key={index} {...metric} />
+                    ))}
                 </div>
             </div>
         </section>
-    )
+    );
 }
 

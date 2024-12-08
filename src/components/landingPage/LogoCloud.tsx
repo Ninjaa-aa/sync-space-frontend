@@ -2,12 +2,12 @@ import Image from 'next/image'
 
 export function LogoCloud() {
     const logos = [
-        { name: 'Airbnb', src: '/placeholder.svg' },
-        { name: 'NASA', src: '/placeholder.svg' },
-        { name: 'Uber', src: '/placeholder.svg' },
-        { name: 'Target', src: '/placeholder.svg' },
-        { name: 'NYT', src: '/placeholder.svg' },
-        { name: 'Etsy', src: '/placeholder.svg' },
+        { name: 'Airbnb', src: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg' },
+        { name: 'NASA', src: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg' },
+        { name: 'Uber', src: 'https://upload.wikimedia.org/wikipedia/commons/5/58/Uber_logo_2018.svg' },
+        { name: 'Target', src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Target_logo.svg' },
+        { name: 'Spotify', src: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg' },
+        { name: 'Etsy', src: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Etsy_logo.svg' },
     ]
 
     return (

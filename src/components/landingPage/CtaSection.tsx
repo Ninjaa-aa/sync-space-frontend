@@ -9,13 +9,13 @@ export function CtaSection() {
                     See all that you can accomplish in ChatSphere.
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/pricing">
+                    <Link href="/register">
                         <Button size="lg" variant="outline" className="bg-white border-white text-[#3F0B3F] hover:bg-[#5B2C5E] hover:text-white">
                             GET STARTED
                         </Button>
                     </Link>
                     <Link href="/contact">
-                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-[#5B2C5E]">
+                        <Button size="lg" variant="outline" className="text-[#3F0B3F] border-white hover:bg-[#5B2C5E] hover:text-white">
                             TALK TO SALES
                         </Button>
                     </Link>

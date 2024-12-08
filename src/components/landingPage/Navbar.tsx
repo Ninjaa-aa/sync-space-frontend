@@ -18,7 +18,7 @@ export function Navbar() {
                 </div>
                 <div className="flex items-center gap-4">
                     <Link href="/login">
-                        <Button variant="ghost" className="text-gray-600 hover:text-[#3F0B3F] transition-colors">Sign in</Button>
+                        <Button variant="outline" className="bg-[#3F0B3F] hover:bg-[#5B2C5E] text-white transition-colors shadow-sm hover:shadow">Sign in</Button>
                     </Link>
                     <Link href="/contact">
                         <Button variant="outline" className="hidden sm:inline-flex border-[#3F0B3F] text-[#3F0B3F] hover:bg-[#3F0B3F] hover:text-white transition-all">
