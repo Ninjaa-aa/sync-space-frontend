@@ -8,41 +8,41 @@ export function Footer() {
                     <div>
                         <h3 className="font-bold mb-4">Product</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Features</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Enterprise</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Security</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Pricing</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Features</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Enterprise</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Security</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Pricing</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="font-bold mb-4">Resources</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Blog</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Help Center</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Partners</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Events</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-text-[#3F0B3F]">Blog</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-text-[#3F0B3F]">Help Center</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-text-[#3F0B3F]">Partners</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-text-[#3F0B3F]">Events</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="font-bold mb-4">Company</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">About Us</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Careers</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">News</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Contact</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-text-[#3F0B3F]">About Us</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-text-[#3F0B3F]">Careers</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">News</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Contact</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="font-bold mb-4">Legal</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Privacy</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Terms</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Cookie Policy</Link></li>
-                            <li><Link href="#" className="text-gray-400 hover:text-purple-700">Licenses</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Privacy</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Terms</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Cookie Policy</Link></li>
+                            <li><Link href="#" className="text-gray-400 hover:text-[#3F0B3F]">Licenses</Link></li>
                         </ul>
                     </div>
                 </div>
-                <div className="mt-12 pt-8 border-t border-gray-800 text-center text-purple-700">
+                <div className="mt-12 pt-8 border-t border-gray-800 text-center text-[#3F0B3F]">
                     <p>&copy; {new Date().getFullYear()} ChatSphere. All rights reserved.</p>
                 </div>
             </div>

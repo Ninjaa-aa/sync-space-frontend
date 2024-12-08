@@ -1,19 +1,24 @@
 import { Button } from "@/components/ui/Button"
+import Link from 'next/link'
 
 export function CtaSection() {
     return (
-        <section className="relative py-24 bg-purple-900 text-white">
+        <section className="relative py-24 bg-[#3F0B3F] text-white">
             <div className="container mx-auto px-4 text-center">
                 <h2 className="text-4xl md:text-5xl font-bold mb-8">
                     See all that you can accomplish in ChatSphere.
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" className="bg-white text-purple-900 hover:bg-gray-100">
-                        GET STARTED
-                    </Button>
-                    <Button size="lg" variant="outline" className="text-white border-white hover:bg-purple-800">
-                        TALK TO SALES
-                    </Button>
+                    <Link href="/pricing">
+                        <Button size="lg" variant="outline" className="bg-white border-white text-[#3F0B3F] hover:bg-[#5B2C5E] hover:text-white">
+                            GET STARTED
+                        </Button>
+                    </Link>
+                    <Link href="/contact">
+                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-[#5B2C5E]">
+                            TALK TO SALES
+                        </Button>
+                    </Link>
                 </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0">

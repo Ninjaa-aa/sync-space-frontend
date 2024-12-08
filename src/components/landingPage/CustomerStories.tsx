@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// import Image from 'next/image'
 
 export function CustomerStories() {
     const stories = [
@@ -23,33 +23,22 @@ export function CustomerStories() {
     return (
         <section className="py-24 bg-gray-50">
             <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-bold text-center mb-16">
-                    The most innovative companies run their business in ChatSphere.
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
+                    What our customers are saying
                 </h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                    {stories.map((story) => (
-                        <div
-                            key={story.company}
-                            className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                        >
-                            <div className="relative h-48">
-                                <Image
-                                    src={story.image}
-                                    alt={story.company}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <div className="h-8 relative mb-4">
-                                    <Image
-                                        src={story.logo}
-                                        alt={`${story.company} logo`}
-                                        fill
-                                        className="object-contain"
-                                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {stories.map((story, index) => (
+                        <div key={index} className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
+                            <div className="flex items-center gap-4 mb-6">
+                                <img src={story.logo} alt="" className="w-12 h-12 rounded-full" />
+                                <div>
+                                    <h3 className="font-semibold text-gray-900">{story.company}</h3>
+                                    <p className="text-gray-600">{story.title || 'Customer Success Story'}</p>
                                 </div>
-                                {story.title && <p className="text-lg font-medium">{story.title}</p>}
+                            </div>
+                            <blockquote className="text-gray-600 italic">&ldquo;{story.title || 'See how ' + story.company + ' achieved success'}&rdquo;</blockquote>
+                            <div className="mt-4 text-[#3F0B3F] font-medium hover:text-[#5B2C5E] transition-colors">
+                                Read full story →
                             </div>
                         </div>
                     ))}
