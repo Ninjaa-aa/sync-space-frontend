@@ -1,5 +1,5 @@
 // import { Button } from "@/components/ui/button"
-// import Image from 'next/image'
+import Image from 'next/image'
 // import Link from 'next/link'
 
 export function Resources() {
@@ -36,7 +36,7 @@ export function Resources() {
                     {resources.map((resource, index) => (
                         <div key={index} className="group">
                             <div className="aspect-video rounded-lg overflow-hidden mb-4 shadow-sm group-hover:shadow-md transition-all duration-200">
-                                <img src={resource.image} alt="" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-200" />
+                                <Image src={resource.image} alt="" layout="fill" objectFit="cover" className="transform group-hover:scale-105 transition-transform duration-200" />
                             </div>
                             <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-[#3F0B3F] transition-colors">
                                 {resource.title}

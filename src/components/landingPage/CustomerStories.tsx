@@ -1,4 +1,4 @@
-// import Image from 'next/image'
+import Image from 'next/image'
 
 export function CustomerStories() {
     const stories = [
@@ -30,7 +30,7 @@ export function CustomerStories() {
                     {stories.map((story, index) => (
                         <div key={index} className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
                             <div className="flex items-center gap-4 mb-6">
-                                <img src={story.logo} alt="" className="w-12 h-12 rounded-full" />
+                                <Image src={story.logo} alt="" width={48} height={48} className="rounded-full" />
                                 <div>
                                     <h3 className="font-semibold text-gray-900">{story.company}</h3>
                                     <p className="text-gray-600">{story.title || 'Customer Success Story'}</p>
