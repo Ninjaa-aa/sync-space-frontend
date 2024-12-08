@@ -1,15 +1,12 @@
 // src/components/ui/input.tsx
-import React from 'react';
+import * as React from "react";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  className?: string;
-}
-
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className = '', ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+  ({ className = "", type, ...props }, ref) => {
     return (
       <input
-        className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+        type={type}
+        className={`flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
         ref={ref}
         {...props}
       />
@@ -17,4 +14,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";
+
+export { Input };

@@ -1,8 +1,11 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';  // Changed this line
 
 export default function ChatSphereLanding({ email }: { email: string }) {
+  const router = useRouter();  // Added this line
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Header with glass effect */}
@@ -60,6 +63,7 @@ export default function ChatSphereLanding({ email }: { email: string }) {
             <motion.button 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => router.push('/workspace/create')}
               className="w-full bg-gradient-to-r from-purple-700 to-purple-900 text-white rounded-lg py-4 px-6 text-lg font-medium shadow-lg shadow-purple-200 hover:shadow-xl hover:shadow-purple-300 transition-all duration-300"
             >
               Create a Workspace
