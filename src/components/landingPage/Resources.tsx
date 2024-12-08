@@ -1,6 +1,6 @@
 // import { Button } from "@/components/ui/button"
-import Image from 'next/image'
-import Link from 'next/link'
+// import Image from 'next/image'
+// import Link from 'next/link'
 
 export function Resources() {
     const resources = [
@@ -27,33 +27,23 @@ export function Resources() {
     ]
 
     return (
-        <section className="py-24">
+        <section className="py-24 bg-white" id="resources">
             <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-bold text-center mb-16">
-                    Your ChatSphere deep dive starts here.
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-16">
+                    Resources to help you get started
                 </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {resources.map((resource) => (
-                        <div key={resource.title} className="group cursor-pointer">
-                            <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
-                                <Image
-                                    src={resource.image}
-                                    alt={resource.title}
-                                    fill
-                                    className="object-cover transition-transform group-hover:scale-105"
-                                />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {resources.map((resource, index) => (
+                        <div key={index} className="group">
+                            <div className="aspect-video rounded-lg overflow-hidden mb-4 shadow-sm group-hover:shadow-md transition-all duration-200">
+                                <img src={resource.image} alt="" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-200" />
                             </div>
-                            <div className="space-y-2">
-                                <div className="text-sm text-muted-foreground">{resource.type}</div>
-                                <h3 className="font-semibold group-hover:text-purple-600 transition-colors">
-                                    {resource.title}
-                                </h3>
-                                <Link
-                                    href="#"
-                                    className="inline-flex items-center text-sm text-purple-600 hover:text-purple-700"
-                                >
-                                    READ MORE →
-                                </Link>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-[#3F0B3F] transition-colors">
+                                {resource.title}
+                            </h3>
+                            <p className="text-gray-600">{resource.type}</p>
+                            <div className="mt-4 text-[#3F0B3F] font-medium group-hover:text-[#5B2C5E] transition-colors">
+                                Learn more →
                             </div>
                         </div>
                     ))}

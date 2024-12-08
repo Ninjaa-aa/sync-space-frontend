@@ -71,7 +71,7 @@ export function Pricing() {
                                 ))}
                             </ul>
                             <div className="pt-4">
-                                <Button className="w-full bg-purple-700 hover:bg-purple-800">
+                                <Button className="w-full bg-[#3F0B3F] hover:bg-[#5B2C5E]">
                                     GET STARTED
                                 </Button>
                             </div>

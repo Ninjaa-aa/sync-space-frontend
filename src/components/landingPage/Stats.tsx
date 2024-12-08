@@ -1,29 +1,19 @@
 export function Stats() {
     return (
-        <section className="py-24 bg-purple-900 text-white">
+        <section className="py-20 bg-[#3F0B3F]">
             <div className="container mx-auto px-4">
-                <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-                    We&apos;re in the business of growing businesses.
-                </h2>
-                <div className="grid md:grid-cols-3 gap-8 text-center">
-                    <div className="space-y-2">
-                        <div className="text-6xl font-bold text-purple-300">61%</div>
-                        <p className="text-lg text-purple-100">
-                            of users say that ChatSphere helps them to stay more connected
-                        </p>
-                    </div>
-                    <div className="space-y-2">
-                        <div className="text-6xl font-bold text-purple-300">30</div>
-                        <p className="text-lg text-purple-100">
-                            The average number of apps used by teams in ChatSphere
-                        </p>
-                    </div>
-                    <div className="space-y-2">
-                        <div className="text-6xl font-bold text-purple-300">60%</div>
-                        <p className="text-lg text-purple-100">
-                            of users say that ChatSphere helps them to collaborate more efficiently
-                        </p>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    {[
+                        { value: "100+", label: "Active Users" },
+                        { value: "50K+", label: "Downloads" }, 
+                        { value: "99.9%", label: "Uptime" },
+                        { value: "24/7", label: "Support" }
+                    ].map((stat: { value: string | number, label: string }, index: number) => (
+                        <div key={index} className="p-6 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-200">
+                            <div className="text-4xl font-bold text-white mb-2">{stat.value}</div>
+                            <div className="text-white/80">{stat.label}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
