@@ -6,6 +6,12 @@ export interface User {
   firstName: string;
   lastName: string;
   roleType: string;
+  phoneNumber?: string;
+  startDate?: string;
+  pronunciation?: {
+    name: string;
+    recording?: string;
+  };
 }
 
 export interface AuthTokens {

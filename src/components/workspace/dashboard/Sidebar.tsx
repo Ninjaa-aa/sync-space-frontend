@@ -1,17 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Hash, ChevronDown, Plus, MessageSquare, Bell, Search } from 'lucide-react';
-import { useAuth } from '@/app/auth/context/AuthContext';
+import { Hash, ChevronDown, Plus, MessageSquare, Bell } from 'lucide-react';
+import ProfileMenu from '@/components/profile/ProfileMenu';
 
-interface SidebarProps {
-  workspaceId: string;
-}
-
-export function Sidebar({ workspaceId }: SidebarProps) {
-  const { user } = useAuth();
-  const router = useRouter();
+export function Sidebar() {
   const [isChannelsOpen, setIsChannelsOpen] = useState(true);
 
   return (
@@ -69,13 +62,8 @@ export function Sidebar({ workspaceId }: SidebarProps) {
 
       {/* User Section */}
       <div className="h-14 border-t border-gray-700 px-3 flex items-center">
-        <div className="flex items-center text-gray-300 w-full">
-          <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center mr-2">
-            {user?.firstName?.[0] || 'U'}
-          </div>
-          <span className="text-sm font-medium truncate">{user?.firstName || 'User'}</span>
-        </div>
+        <ProfileMenu />
       </div>
     </div>
   );
-} 
+}

@@ -1,18 +1,15 @@
 'use client';
 
-
 import { createContext, useContext, useState, useEffect } from "react";
 import { User } from "@/types/auth";
 import { authApi } from "@/lib/auth";
 
 interface AuthContextType {
   user: User | null;
-  login: (
-    user: User,
-    tokens: { access_token: string }
-  ) => void;
+  login: (user: User, tokens: { access_token: string }) => void;
   logout: () => void;
   isLoading: boolean;
+  updateUserProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -20,6 +17,7 @@ const AuthContext = createContext<AuthContextType>({
   login: () => {},
   logout: () => {},
   isLoading: true,
+  updateUserProfile: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -56,7 +54,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log('Login called with:', { user, tokens });
       
-      // Store tokens
       localStorage.setItem('accessToken', tokens.access_token);
       localStorage.setItem('token', tokens.access_token);
       
@@ -68,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(user);
     } catch (error) {
       console.error('Error in login:', error);
-      throw error; // Re-throw to be handled by the caller
+      throw error;
     }
   };
 
@@ -78,8 +75,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+  const updateUserProfile = async () => {
+    try {
+      const response = await authApi.get('/auth/me');
+      setUser(response.data);
+    } catch (error) {
+      console.error('Failed to update user profile:', error);
+    }
+  };
+
+  const value = {
+    user,
+    login,
+    logout,
+    updateUserProfile,
+    isLoading,
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
