@@ -8,15 +8,16 @@ export enum WorkspaceStatus {
   INACTIVE = 'inactive',
 }
 
-export enum ChannelVisibility {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
+export enum ChannelType {
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
+  GENERAL = 'GENERAL'
 }
 
 // Interfaces for Channels, Workspace Creation, and Response
 export interface Channel {
   name: string; // Required, unique identifier for the channel
-  visibility: ChannelVisibility; // 'public' or 'private'
+  type: ChannelType; // 'PUBLIC' or 'PRIVATE'
   description?: string; // Optional, additional details about the channel
 }
 
@@ -76,7 +77,6 @@ export interface StepProps {
   error?: string; // Optional error message
 }
 
-
 interface PlanStepProps {
 
   workspaceName: string;
@@ -94,4 +94,3 @@ interface PlanStepProps {
   onSelectPlan: (plan: Plan) => void;
 
 }
-
