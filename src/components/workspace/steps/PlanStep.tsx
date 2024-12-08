@@ -4,13 +4,10 @@ import { Loader2, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { pricingPlans, Plan } from "@/data/plan";
 import { workspaceService } from "@/services/workspaceService";
-<<<<<<< HEAD
-import type { CreateWorkspaceDto } from "@/types/workspace";
-import { ChannelVisibility } from "@/types/workspace";
-=======
-import type { CreateWorkspaceDto, Channel } from "@/types/workspace";
+
+import type { CreateWorkspaceDto} from "@/types/workspace";
 import { ChannelType } from "@/types/workspace";
->>>>>>> eff3272f9ab2fcee49a7eeeaa73cc97e9ac37d2a
+
 
 interface PlanStepProps {
   workspaceName: string;
