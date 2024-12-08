@@ -99,7 +99,9 @@ export function OAuthCallback({ provider }: { provider: OAuthProviderConfig }) {
         }
 
         // Success - login and redirect
-        login(response.data.user, response.data.tokens);
+        login(response.data.user, {
+          access_token: response.data.access_token
+        });
         router.replace(`/register/landing?email=${encodeURIComponent(response.data.user.email)}`);
 
       } catch (err) {

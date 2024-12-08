@@ -14,21 +14,52 @@ export const authApi = axios.create({
 // Add request interceptor to add token
 authApi.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log('Adding token to request:', {
+      url: config.url,
+      hasToken: !!token
+    });
+  } else {
+    console.warn('No token found for request:', config.url);
   }
+  
   return config;
+}, (error) => {
+  console.error('Request interceptor error:', error);
+  return Promise.reject(error);
 });
 
-// Add response interceptor to handle 401 errors
+// Add response interceptor
 authApi.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      // Clear tokens on authentication error
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
+      try {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          const response = await authApi.post('/auth/refresh-token', {
+            refreshToken
+          });
+          
+          const { access_token } = response.data;
+          localStorage.setItem('accessToken', access_token);
+          
+          originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
+          return authApi(originalRequest);
+        }
+      } catch (refreshError) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        window.location.href = '/login';
+      }
     }
+    
     return Promise.reject(error);
   }
 );

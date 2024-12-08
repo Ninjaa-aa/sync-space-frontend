@@ -1,4 +1,3 @@
-
 'use client';
 
 
@@ -10,7 +9,7 @@ interface AuthContextType {
   user: User | null;
   login: (
     user: User,
-    tokens: { accessToken: string; refreshToken: string }
+    tokens: { access_token: string }
   ) => void;
   logout: () => void;
   isLoading: boolean;
@@ -29,14 +28,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const initAuth = async () => {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('token') || localStorage.getItem('accessToken');
       if (token) {
         try {
-          const response = await authApi.get("/auth/me");
+          const response = await authApi.get('/auth/me', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
           setUser(response.data);
-        } catch {
+        } catch (error) {
+          console.error('Auth initialization error:', error);
           localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('token');
         }
       }
       setIsLoading(false);
@@ -44,19 +48,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initAuth();
   }, []);
 
-  const login = (
-    user: User,
-    tokens: { accessToken: string; refreshToken: string }
-  ) => {
-    setUser(user);
-    localStorage.setItem("accessToken", tokens.accessToken);
-    localStorage.setItem("refreshToken", tokens.refreshToken);
+  const login = (user: User, tokens: { access_token: string }) => {
+    try {
+      if (!tokens?.access_token) {
+        throw new Error('No access token provided');
+      }
+
+      console.log('Login called with:', { user, tokens });
+      
+      // Store tokens
+      localStorage.setItem('accessToken', tokens.access_token);
+      localStorage.setItem('token', tokens.access_token);
+      
+      console.log('Stored tokens:', {
+        accessToken: localStorage.getItem('accessToken'),
+        token: localStorage.getItem('token')
+      });
+      
+      setUser(user);
+    } catch (error) {
+      console.error('Error in login:', error);
+      throw error; // Re-throw to be handled by the caller
+    }
   };
 
   const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('token');
     setUser(null);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
   };
 
   return (

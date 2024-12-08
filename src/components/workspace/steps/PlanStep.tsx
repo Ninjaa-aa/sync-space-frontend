@@ -1,15 +1,12 @@
 // src/components/workspace/steps/PlanStep.tsx
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { pricingPlans, Plan } from '@/data/plan';
-import { workspaceService } from '@/services/workspaceService';
-import type { 
-  CreateWorkspaceDto, 
-  Channel 
-} from '@/types/workspace';
-import { ChannelVisibility } from '@/types/workspace';
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { pricingPlans, Plan } from "@/data/plan";
+import { workspaceService } from "@/services/workspaceService";
+import type { CreateWorkspaceDto, Channel } from "@/types/workspace";
+import { ChannelVisibility } from "@/types/workspace";
 
 interface PlanStepProps {
   workspaceName: string;
@@ -21,34 +18,44 @@ interface PlanStepProps {
   error?: string;
 }
 
-export const PlanStep = ({ 
-  workspaceName, 
+export const PlanStep = ({
+  workspaceName,
   adminName,
   adminPhoto,
   channels,
   pendingInvites,
-  error: propError
+  error: propError,
 }: PlanStepProps) => {
   const router = useRouter();
-  const [selectedPlanId, setSelectedPlanId] = useState<string>('free');
-  const [billingPeriod] = useState<'monthly' | 'yearly'>('monthly');
+  const [selectedPlanId, setSelectedPlanId] = useState<string>("free");
+  const [billingPeriod] = useState<"monthly" | "yearly">("monthly");
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState(propError);
 
   const formatChannels = (channelNames: string[]): Channel[] => {
-    return channelNames.map(channel => ({
-      name: channel.toLowerCase().trim().replace(/\s+/g, '-'),
+    return channelNames.map((channel) => ({
+      name: channel.toLowerCase().trim().replace(/\s+/g, "-"),
       visibility: ChannelVisibility.PUBLIC,
-      description: `Channel for ${channel}`
+      description: `Channel for ${channel}`,
     }));
   };
 
   const handleContinue = async () => {
-    const selectedPlan = pricingPlans.find(plan => plan.id === selectedPlanId);
+    const token = localStorage.getItem('token') || localStorage.getItem('accessToken');
+    if (!token) {
+      setError('You must be logged in to create a workspace');
+      router.push('/login');
+      return;
+    }
+
+    console.log('Using token:', token); // Debug log
+    const selectedPlan = pricingPlans.find(
+      (plan) => plan.id === selectedPlanId
+    );
     if (!selectedPlan) return;
 
     setIsCreating(true);
-    setError('');
+    setError("");
 
     try {
       // Create workspace data with proper typing
@@ -57,16 +64,17 @@ export const PlanStep = ({
         adminName,
         channels: formatChannels(channels),
         pendingInvites,
-        ...(adminPhoto && { adminPhoto }),
         plan: {
           id: selectedPlan.id,
           name: selectedPlan.name,
-          billingPeriod
-        }
+          billingPeriod,
+        },
       };
 
-      const response = await workspaceService.createWorkspace(workspaceData);
+      console.log('Workspace creation payload:', workspaceData); // Add this log
 
+      const response = await workspaceService.createWorkspace(workspaceData);
+     
       // Save workspace data
       const workspaceLocalData = {
         id: response.workspaceId,
@@ -74,15 +82,23 @@ export const PlanStep = ({
         adminName,
         channels,
         photoUrl: response.photoUrl,
-        plan: selectedPlan.name
+        plan: selectedPlan.name,
       };
 
-      localStorage.setItem('currentWorkspaceId', response.workspaceId);
-      localStorage.setItem('workspaceData', JSON.stringify(workspaceLocalData));
+      localStorage.setItem("currentWorkspaceId", response.workspaceId);
+      localStorage.setItem("workspaceData", JSON.stringify(workspaceLocalData));
 
       router.push(`/workspace/${response.workspaceId}/dashboard`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create workspace');
+      console.error('Workspace creation error:', err);
+      if (err.response?.status === 401) {
+        setError('Your session has expired. Please log in again.');
+        router.push('/login');
+      } else {
+        setError(
+          err instanceof Error ? err.message : "Failed to create workspace"
+        );
+      }
     } finally {
       setIsCreating(false);
     }
@@ -93,12 +109,11 @@ export const PlanStep = ({
     <div className="max-w-5xl mx-auto">
       <div className="mt-8 flex justify-between items-center">
         <p className="text-sm text-gray-400">
-          {selectedPlanId === 'free' 
-            ? 'Start with the basics and upgrade when you need to'
-            : 'Your workspace will be set up with advanced features'
-          }
+          {selectedPlanId === "free"
+            ? "Start with the basics and upgrade when you need to"
+            : "Your workspace will be set up with advanced features"}
         </p>
-        <Button 
+        <Button
           onClick={handleContinue}
           disabled={isCreating}
           className="min-w-[200px]"
@@ -109,14 +124,14 @@ export const PlanStep = ({
               Creating Your Workspace...
             </>
           ) : (
-            `Get Started with ${selectedPlanId.charAt(0).toUpperCase() + selectedPlanId.slice(1)}`
+            `Get Started with ${
+              selectedPlanId.charAt(0).toUpperCase() + selectedPlanId.slice(1)
+            }`
           )}
         </Button>
       </div>
 
-      {error && (
-        <p className="text-red-400 text-sm mt-4">{error}</p>
-      )}
+      {error && <p className="text-red-400 text-sm mt-4">{error}</p>}
     </div>
   );
 };

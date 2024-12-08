@@ -19,8 +19,30 @@ export default function LoginForm() {
 
     try {
       const response = await authApi.post('/auth/login', formData);
-      login(response.data.user, response.data.tokens);
+      console.log('Raw login response:', {
+        status: response.status,
+        data: response.data,
+        headers: response.headers
+      });
+      console.log('Login response:', response.data);
+
+      if (response.data.access_token) {
+        localStorage.setItem('accessToken', response.data.access_token);
+        localStorage.setItem('token', response.data.access_token);
+        
+        console.log('Stored tokens:', {
+          accessToken: localStorage.getItem('accessToken'),
+          token: localStorage.getItem('token')
+        });
+
+        login(response.data.user, {
+          access_token: response.data.access_token
+        });
+      } else {
+        throw new Error('No access token received');
+      }
     } catch (error: any) {
+      console.error('Login error:', error);
       setError(error.response?.data?.message || 'Failed to login');
     } finally {
       setIsLoading(false);
