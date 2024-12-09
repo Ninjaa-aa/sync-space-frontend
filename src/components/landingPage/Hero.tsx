@@ -12,13 +12,19 @@ export function Hero() {
                     ChatSphere is free to try for as long as you like
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
                     <Link href="/register">
-                        <Button variant="outline" className="bg-[#3F0B3F] text-white hover:bg-white hover:text-[#3F0B3F] text-lg py-6 px-8 transition-all shadow-sm hover:shadow">
+                        <Button
+                            className="min-w-[160px] bg-[#3F0B3F] hover:bg-[#5B2C5E] text-white text-lg py-6 px-8 transition-all duration-200 shadow-sm hover:shadow"
+                        >
                             GET STARTED
                         </Button>
                     </Link>
                     <Link href="/pricing">
-                        <Button variant="outline" className="text-lg py-6 px-8 text-[#3F0B3F] border-[#3F0B3F] hover:bg-[#3F0B3F] hover:text-white transition-all shadow-sm hover:shadow">
+                        <Button
+                            variant="outline"
+                            className="min-w-[160px] text-lg py-6 px-8 border-2 border-[#3F0B3F] text-[#3F0B3F] hover:bg-[#3F0B3F] hover:text-white transition-all duration-200 shadow-sm hover:shadow"
+                        >
                             FIND YOUR SUBSCRIPTION →
                         </Button>
                     </Link>
