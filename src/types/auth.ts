@@ -21,6 +21,7 @@ export interface AuthTokens {
 
 export interface AuthResponse {
   data: {
+    access_token: string;
     user: User;
     tokens: AuthTokens;
   };

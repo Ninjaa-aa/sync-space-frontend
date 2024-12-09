@@ -56,7 +56,7 @@ export function OAuthCallback({ provider }: { provider: OAuthProviderConfig }) {
           throw new Error('Missing authentication state');
         }
 
-        // Parse and validate stored state
+        // Parse and validate stored stat
         let savedStateData: AuthState;
         try {
           savedStateData = JSON.parse(savedStateJson);
