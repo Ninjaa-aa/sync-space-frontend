@@ -35,6 +35,8 @@ export function OAuthCallback({ provider }: { provider: OAuthProviderConfig }) {
   });
 
   useEffect(() => {
+    if (!searchParams) return;
+
     const handleCallback = async () => {
       if (stateValidated.current) return;
       stateValidated.current = true;
@@ -56,7 +58,7 @@ export function OAuthCallback({ provider }: { provider: OAuthProviderConfig }) {
           throw new Error('Missing authentication state');
         }
 
-        // Parse and validate stored stat
+        // Parse and validate stored state
         let savedStateData: AuthState;
         try {
           savedStateData = JSON.parse(savedStateJson);
@@ -84,10 +86,10 @@ export function OAuthCallback({ provider }: { provider: OAuthProviderConfig }) {
         // Clear state after validation
         sessionStorage.removeItem(provider.stateKey);
 
-         // Exchange code for tokens if needed
+        // Exchange code for tokens if needed
         let tokenData: TokenData = { code: code || undefined };
         if (provider.tokenExchange) {
-          tokenData = await provider.tokenExchange(code!);
+          tokenData = await provider.tokenExchange(code);
         }
 
         // Process token and complete authentication
