@@ -1,17 +1,10 @@
 import { NextRequest } from 'next/server';
 
-interface RouteParams {
-  params: {
-    size: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
 export async function GET(
   request: NextRequest,
-  context: RouteParams
-) {
-  const size = context.params.size.split('x');
+  { params }: { params: { size: string } }
+): Promise<Response> {
+  const size = params.size.split('x');
   const width = parseInt(size[0]);
   const height = size[1] ? parseInt(size[1]) : width;
 
