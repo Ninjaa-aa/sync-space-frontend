@@ -15,7 +15,7 @@ export function CtaSection() {
                         </Button>
                     </Link>
                     <Link href="/contact">
-                        <Button size="lg" variant="outline" className="text-[#3F0B3F] border-white hover:bg-[#5B2C5E] hover:text-white">
+                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-[#5B2C5E] hover:text-white outline-white">
                             TALK TO SALES
                         </Button>
                     </Link>
