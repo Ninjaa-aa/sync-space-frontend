@@ -1,5 +1,5 @@
-import { Link } from 'lucide-react';
-import { SocialLogin } from './SocialLogin';
+// import { Link } from 'lucide-react';
+// import { SocialLogin } from './SocialLogin';
 import { EmailForm } from './EmailForm';
 
 export default function RegisterForm() {
