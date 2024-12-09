@@ -32,7 +32,9 @@ export const AdminProfileStep = ({ formData, onChange, onPhotoUpload, onNext, er
         <div className="flex items-center space-x-4">
           <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
             {formData.photoPreview ? (
-              <Image src={formData.photoPreview} alt="Preview" layout="fill" objectFit="cover" />
+              typeof formData.photoPreview === 'string' && (
+                <Image src={formData.photoPreview} alt="Preview" layout="fill" objectFit="cover" />
+              )
             ) : (
               <span className="text-gray-400">{typeof formData.adminName === 'string' ? formData.adminName[0]?.toUpperCase() : ''}</span>
             )}
