@@ -1,6 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { SocialLogin } from './SocialLogin';
 
 // Error message mappings
 const ERROR_MESSAGES = {
@@ -41,25 +44,25 @@ export function EmailForm() {
 
   const handleContinue = async () => {
     if (!validateEmail()) return;
-    
+
     setError('');
     setIsLoading(true);
-    
+
     try {
       const response = await fetch('/api/auth/register/init', { // Updated endpoint
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         const errorMessage = data.message as keyof typeof ERROR_MESSAGES;
         setError(ERROR_MESSAGES[errorMessage] || data.message);
         return;
       }
-      
+
       router.push(`/register/verify?email=${encodeURIComponent(email)}`);
     } catch (error: unknown) {
       const err = error as Error;
@@ -71,45 +74,52 @@ export function EmailForm() {
   };
 
   return (
-    <>
-      <div className="flex justify-center">
-        <div className="bg-purple-600 w-12 h-12 rounded-lg flex items-center justify-center transform transition-transform hover:scale-105">
-          <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+      {/* Logo */}
+      <div className="mb-8">
+        {/* <Image
+          src="/logo.svg"
+          alt="ChatSphere"
+          width={124}
+          height={36}
+          className="cursor-pointer"
+        /> */}
+        <Link href="/">
+          <h1 className="text-3xl font-bold text-[#5B2C5E]  tracking-tight hover:text-[#3F0B3F] transition-colors cursor-pointer">
+            ChatSphere
+          </h1>
+        </Link>
+      </div>
+
+      <div className="w-full max-w-md px-8">
+        {/* Title */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-4">
+            First of all, enter your email address
+          </h1>
+          <p className="text-lg text-gray-600">
+            We suggest using the email address that you use at work.
+          </p>
         </div>
-      </div>
 
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-gray-900">First, enter your email</h1>
-        <p className="mt-3 text-gray-600">We suggest using your work email address.</p>
-      </div>
-
-      {error && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md" role="alert">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm text-red-700">{error}</p>
-              {error === ERROR_MESSAGES['Email already registered'] && (
-                <a href="/login" className="text-sm text-red-700 underline hover:text-red-800">
-                  Click here to sign in
-                </a>
-              )}
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded" role="alert">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="space-y-6">
-        <div className="group">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email address
-          </label>
+        {/* Email Form */}
+        <div className="space-y-6">
           <input
             id="email"
             type="email"
@@ -120,32 +130,64 @@ export function EmailForm() {
               setError('');
             }}
             onKeyPress={(e) => e.key === 'Enter' && handleContinue()}
-            className={`block w-full px-4 py-3 rounded-lg border ${
-              error ? 'border-red-300' : 'border-gray-300'
-            } shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors`}
-            aria-invalid={!!error}
-            aria-describedby={error ? "email-error" : undefined}
+            className="block w-full px-4 py-3 rounded border border-gray-300 focus:ring-2 focus:ring-[#3F0B3F] focus:border-[#3F0B3F] transition-colors text-base"
           />
-        </div>
-        
-        <button
-          onClick={handleContinue}
-          disabled={!email || isLoading}
-          className="w-full py-3 px-4 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center">
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Verifying...
+
+          <button
+            onClick={handleContinue}
+            disabled={!email || isLoading}
+            className="w-full py-3 px-4 bg-[#3F0B3F] text-white font-medium rounded hover:bg-[#5B2C5E] focus:outline-none focus:ring-2 focus:ring-[#3F0B3F] focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </div>
+            ) : (
+              'Continue'
+            )}
+          </button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
             </div>
-          ) : (
-            'Continue'
-          )}
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500">OR</span>
+            </div>
+          </div>
+
+          {/* Keep existing SocialLogin component */}
+          <SocialLogin />
+        </div>
+
+        {/* Footer */}
+        <div className="mt-8 text-center text-sm text-gray-600">
+          <p>
+            Already using ChatSphere?{' '}
+            <Link href="/login" className="text-[#3F0B3F] hover:text-[#5B2C5E] font-medium">
+              Sign in to an existing workspace
+            </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Terms & Privacy Links */}
+      <div className="mt-8 text-center text-sm text-gray-500 space-x-4">
+        <Link href="/privacy" className="hover:text-gray-700">Privacy & terms</Link>
+        <Link href="/contact" className="hover:text-gray-700">Contact us</Link>
+        <button className="hover:text-gray-700">
+          <span className="flex items-center">
+            <span>Change region</span>
+            <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
         </button>
       </div>
-    </>
+    </div>
   );
 }

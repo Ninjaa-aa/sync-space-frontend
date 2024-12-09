@@ -12,19 +12,19 @@ export default function RegistrationFlow() {
 
   const handleSubmit = async (data: { email: string }) => {
     if (!data.email) return;
-    
+
     setError('');
     setIsLoading(true);
-    
+
     try {
       const response = await fetch('/api/auth/register/init', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         if (response.status === 400 && data.message === 'Email already registered') {
           setError('This email is already registered. Try signing in instead.');
@@ -101,7 +101,7 @@ export default function RegistrationFlow() {
               className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
             />
           </div>
-          
+
           <button
             onClick={() => handleSubmit({ email })}
             disabled={!email || isLoading}
