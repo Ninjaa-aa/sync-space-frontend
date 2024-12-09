@@ -74,6 +74,6 @@ export interface StepProps {
   };
   onChange: (field: string, value: string) => void; // Function to handle field changes
   onNext: () => void; // Callback for proceeding to the next step
-  error?: string; // Optional error message
+  error?: string; // Optional error mesage
 }
 
